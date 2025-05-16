@@ -1,90 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Apply for a Loan - Aaravi Digital</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loan Application Form - Aaravi Digital</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
+      background: #f4f4f4;
       padding: 20px;
     }
-    .form-container {
+    .container {
       max-width: 500px;
       margin: auto;
-      background: #ffffff;
-      padding: 20px;
+      background: white;
+      padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-    input, textarea, select {
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
+      margin-top: 5px;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
     button {
-      background-color: #007BFF;
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
       color: white;
       border: none;
-      padding: 12px;
       border-radius: 5px;
-      cursor: pointer;
+      font-size: 16px;
     }
-    button:hover {
-      background-color: #0056b3;
-    }
-    h2 {
+    .success {
+      margin-top: 10px;
+      color: green;
       text-align: center;
     }
   </style>
 </head>
 <body>
-
-  <div class="form-container">
+  <div class="container">
     <h2>Apply for a Loan</h2>
-    <form id="loanForm">
-      <input type="text" name="name" placeholder="Your Full Name" required>
-      <input type="email" name="email" placeholder="Email Address" required>
-      <input type="tel" name="phone" placeholder="Phone Number" required>
-      <input type="number" name="amount" placeholder="Loan Amount" required>
-      <textarea name="purpose" placeholder="Purpose of Loan" required></textarea>
-      <button type="submit">Submit</button>
+    <form id="loan-form">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="loan">Loan Amount</label>
+      <input type="number" id="loan" name="loan" required>
+
+      <label for="purpose">Purpose</label>
+      <textarea id="purpose" name="purpose" required></textarea>
+
+      <button type="submit">Submit Application</button>
+      <p class="success" id="success-message"></p>
     </form>
-    <p id="responseMsg" style="text-align:center; color:green;"></p>
   </div>
 
   <script>
-    document.getElementById('loanForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        amount: form.amount.value,
-        purpose: form.purpose.value
-      };
+    const form = document.getElementById('loan-form');
+    const successMessage = document.getElementById('success-message');
 
-      fetch('https://script.google.com/macros/s/AKfycbylxEyZOYO3xs5c4dTFDQg5NzmvhzPBnD6m4bKOR6Am8Sdx7d-DDbhuj5HwDH66y-CD/exec', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const formData = Object.fromEntries(data.entries());
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbylxEyZOYO3xs5c4dTFDQg5NzmvhzPBnD6m4bKOR6Am8Sdx7d-DDbhuj5HwDH66y-CD/exec", {
+          method: 'POST',
+          body: JSON.stringify(formData),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.ok) {
+          successMessage.textContent = "Application submitted successfully!";
+          form.reset();
+        } else {
+          successMessage.textContent = "Error submitting application.";
         }
-      })
-      .then(response => response.text())
-      .then(msg => {
-        document.getElementById('responseMsg').innerText = "Form submitted successfully!";
-        form.reset();
-      })
-      .catch(error => {
-        document.getElementById('responseMsg').innerText = "Error submitting form. Try again.";
-      });
+      } catch (error) {
+        successMessage.textContent = "Something went wrong.";
+      }
     });
   </script>
-
 </body>
 </html>
