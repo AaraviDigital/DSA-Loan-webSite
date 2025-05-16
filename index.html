@@ -1,76 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Apply for Loan - Aaravi Digital</title>
+  <meta charset="UTF-8">
+  <title>Apply for a Loan - Aaravi Digital</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f3f4f6;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
     }
-    .container {
-      max-width: 600px;
-      margin: 40px auto;
-      background: #fff;
+    form {
+      background: white;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
       border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h2 {
-      text-align: center;
-      color: #333;
+    label {
+      display: block;
+      margin: 10px 0 5px;
     }
-    form input, form select {
+    input, select {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0 20px 0;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      border-radius: 6px;
     }
     button {
-      width: 100%;
-      padding: 14px;
-      background-color: #2d89ef;
+      background: #007BFF;
       color: white;
+      padding: 10px;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
+      width: 100%;
       font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #1e65c1;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Apply for a Loan</h2>
-    <form action="https://script.google.com/macros/s/AKfycbwBlTlKVkHSVSAY-wX4E6-jXlPOs14ZdKF6lYqOzD97ZYXHIO-r1z93cP7yakgS8d9Q/exec" method="POST">
-      <label>Full Name</label>
-      <input type="text" name="name" required />
+  <h2 style="text-align:center;">Apply for a Loan</h2>
+  <form method="POST" action="https://script.google.com/macros/s/AKfycbylxEyZOYO3xs5c4dTFDQg5NzmvhzPBnD6m4bKOR6Am8Sdx7d-DDbhuj5HwDH66y-CD/exec">
+    <label for="name">Full Name</label>
+    <input type="text" name="name" required />
 
-      <label>Email</label>
-      <input type="email" name="email" required />
+    <label for="mobile">Mobile Number</label>
+    <input type="text" name="mobile" required />
 
-      <label>Mobile Number</label>
-      <input type="tel" name="mobile" required />
+    <label for="amount">Loan Amount</label>
+    <input type="text" name="amount" required />
 
-      <label>Loan Type</label>
-      <select name="loan_type" required>
-        <option value="">-- Select --</option>
-        <option value="Personal Loan">Personal Loan</option>
-        <option value="Business Loan">Business Loan</option>
-        <option value="Home Loan">Home Loan</option>
-        <option value="Car Loan">Car Loan</option>
-      </select>
-
-      <label>Loan Amount</label>
-      <input type="number" name="amount" required />
-
-      <button type="submit">Submit Application</button>
-    </form>
-  </div>
+    <button type="submit">Submit Application</button>
+  </form>
 </body>
 </html>
