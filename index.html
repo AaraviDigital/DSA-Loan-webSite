@@ -6,52 +6,85 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: #f5f5f5;
+      margin: 0;
       padding: 20px;
     }
-    form {
-      background: white;
-      padding: 20px;
+    .form-container {
       max-width: 500px;
       margin: auto;
+      background: #ffffff;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input, select {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
+      margin: 8px 0;
       border: 1px solid #ccc;
+      border-radius: 5px;
     }
     button {
-      background: #007BFF;
+      background-color: #007BFF;
       color: white;
-      padding: 10px;
       border: none;
+      padding: 12px;
       border-radius: 5px;
-      width: 100%;
-      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    h2 {
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h2 style="text-align:center;">Apply for a Loan</h2>
-  <form method="POST" action="https://script.google.com/macros/s/AKfycbylxEyZOYO3xs5c4dTFDQg5NzmvhzPBnD6m4bKOR6Am8Sdx7d-DDbhuj5HwDH66y-CD/exec">
-    <label for="name">Full Name</label>
-    <input type="text" name="name" required />
 
-    <label for="mobile">Mobile Number</label>
-    <input type="text" name="mobile" required />
+  <div class="form-container">
+    <h2>Apply for a Loan</h2>
+    <form id="loanForm">
+      <input type="text" name="name" placeholder="Your Full Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="number" name="amount" placeholder="Loan Amount" required>
+      <textarea name="purpose" placeholder="Purpose of Loan" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="responseMsg" style="text-align:center; color:green;"></p>
+  </div>
 
-    <label for="amount">Loan Amount</label>
-    <input type="text" name="amount" required />
+  <script>
+    document.getElementById('loanForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        amount: form.amount.value,
+        purpose: form.purpose.value
+      };
 
-    <button type="submit">Submit Application</button>
-  </form>
+      fetch('https://script.google.com/macros/s/AKfycbylxEyZOYO3xs5c4dTFDQg5NzmvhzPBnD6m4bKOR6Am8Sdx7d-DDbhuj5HwDH66y-CD/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.text())
+      .then(msg => {
+        document.getElementById('responseMsg').innerText = "Form submitted successfully!";
+        form.reset();
+      })
+      .catch(error => {
+        document.getElementById('responseMsg').innerText = "Error submitting form. Try again.";
+      });
+    });
+  </script>
+
 </body>
 </html>
